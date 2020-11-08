@@ -14,10 +14,21 @@ router.get('/add', ensureAuth, (req, res) => {
 // @route   POST /stories
 router.post('/', ensureAuth, async (req, res) => {
   try {
-    req.body.user = req.user.id
-    await Story.create(req.body)
-    res.redirect('/dashboard')
+
+    if(req.body.title!='' && req.body.body!='')
+    {
+      //console.log(req.body)
+      req.body.user = req.user.id
+      await Story.create(req.body)
+      res.redirect('/dashboard')
+    }
+    else
+    {
+      res.redirect('stories/add');
+    }
+    
   } catch (err) {
+    //console.log(req.body)
     console.error(err)
     res.render('error/500')
   }
@@ -99,6 +110,11 @@ router.put('/:id', ensureAuth, async (req, res) => {
       return res.render('error/404')
     }
 
+    if(req.body.title == '' || req.body.body == '')
+    {
+      return res.render('error/Empty')
+    }
+
     if (story.user != req.user.id) {
       res.redirect('/stories')
     } else {
@@ -155,6 +171,8 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
     console.error(err)
     res.render('error/500')
   }
+
 })
+
 
 module.exports = router

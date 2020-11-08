@@ -1,4 +1,5 @@
 const moment = require('moment')
+const Story =  require('../models/Story');
 
 module.exports = {
   formatDate: function (date, format) {
@@ -16,6 +17,9 @@ module.exports = {
   },
   stripTags: function (input) {
     return input.replace(/<(?:.|\n)*?>/gm, '')
+  },
+  removenbps: function (input) {
+    return input.replace(/&nbsp;/g, ' ')
   },
   editIcon: function (storyUser, loggedUser, storyId, floating = true) {
     if (storyUser._id.toString() == loggedUser._id.toString()) {
@@ -40,4 +44,9 @@ module.exports = {
         ' selected="selected"$&'
       )
   },
+  likecount: async function (storyId) {
+      const story = await Story.findById(storyId);
+      story.like++;
+      return story.like;
+  }
 }
