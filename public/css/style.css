@@ -20,3 +20,19 @@ p {
 .img-small {
   width: 180px;
 }
+
+.row-index {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+body {
+  background-image: url("/collage.jpg");
+  font-family: 'PT Sans', sans-serif;
+  background-size: cover;
+  background-position: center;
+}
+
+.white{
+  background-color: white;
+}

@@ -24,6 +24,12 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  favourites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Story'
+    }
+  ]
 })
 
 module.exports = mongoose.model('User', UserSchema)

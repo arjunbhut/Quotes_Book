@@ -1,11 +1,12 @@
-<div class="white"><h1>{{title}}</h1></div>
+<div class="white">
+<h1>{{title}}</h1>
 <div class="row">
     <div class="row-index">
     {{#each stories}}
     <div class="col s12 m4">
         <div class="card">
             <div class="card-image">
-                {{{editIcon user ../user _id}}}
+                {{{deleteIcon user ../user _id}}}
             </div>
             <div class="card-content center-align">
                 <h5>{{title}}</h5>
@@ -15,11 +16,6 @@
                     <img src="{{user.image}}" alt="">
                     <a href="/stories/user/{{user._id}}">{{user.displayName}}</a>
                 </div>
-                <form action="stories/addFavourite" method="POST">
-                    <button type="submit"><i class="fas fa-bookmark"></i></button>
-                    <input type="hidden" value="{{_id}}" name="storyId">
-                </form>
-                
             </div>
             <div class="card-action center-align">
                 <a href="/stories/{{_id}}" class="btn grey">Read More</a>
@@ -30,4 +26,5 @@
     <p>No Quotes to display</p>
     {{/each}}
     </div>
+</div>
 </div>

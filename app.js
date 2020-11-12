@@ -48,7 +48,8 @@ const {
   truncate,
   editIcon,
   select,
-  removenbps
+  removenbps,
+  deleteIcon
 } = require('./helpers/hbs')
 
 // Handlebars
@@ -61,7 +62,8 @@ app.engine(
       truncate,
       editIcon,
       select,
-      removenbps
+      removenbps,
+      deleteIcon
     },
     defaultLayout: 'main',
     extname: '.hbs',
@@ -96,6 +98,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', require('./routes/index'))
 app.use('/auth', require('./routes/auth'))
 app.use('/stories', require('./routes/stories'))
+
 
 const PORT = process.env.PORT || 3000
 

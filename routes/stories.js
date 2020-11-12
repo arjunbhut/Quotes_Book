@@ -3,11 +3,71 @@ const router = express.Router()
 const { ensureAuth } = require('../middleware/auth')
 
 const Story = require('../models/Story')
+const User = require('../models/User');
 
 // @desc    Show add page
 // @route   GET /stories/add
 router.get('/add', ensureAuth, (req, res) => {
   res.render('stories/add')
+})
+
+// @desc    Favourite Stories
+// @route   POST /stories/addFavourite
+router.post('/addFavourite', ensureAuth, async (req, res) => {
+  try {
+    
+    console.log(req.body.storyId);
+    const user = await User.findById(req.user.id);
+    let n = user.favourites.includes(req.body.storyId);
+    if(!n)
+    {
+      user.favourites.push(req.body.storyId);
+      user.save();
+    }
+    res.redirect('/stories');
+
+  } catch (err) {
+    console.error(err)
+    res.render('error/500')
+  }
+
+})
+
+// @desc    Display Favourite Stories
+// @route   GET /stories/showFavourite
+router.get('/showFavourite', ensureAuth, async(req,res) =>{
+
+  const user = await User.findById(req.user.id);
+  //console.log(user.favourites);
+  const stories = [];
+  let size = user.favourites.length;
+  let count = 0;
+  
+  let title = "Your Favourite Quotes";
+  if(!size)
+  {
+    res.render('stories/fav',{
+      stories,
+      title
+    })
+  }
+
+  
+  user.favourites.forEach( async element => {
+    const sto = await Story.findById(element).populate('user').lean().sort({ createdAt: 'desc' });
+    stories.push(sto);
+  
+    count++;
+    if(count==size-1 || count==size)
+    {
+      res.render('stories/fav', {
+        stories,
+        title
+      })
+    }
+  });
+
+
 })
 
 // @desc    Process add form
@@ -43,8 +103,11 @@ router.get('/', ensureAuth, async (req, res) => {
       .sort({ createdAt: 'desc' })
       .lean()
 
+      console.log(stories);
+    let title = "Famous Quotes";
     res.render('stories/index', {
       stories,
+      title
     })
   } catch (err) {
     console.error(err)
@@ -172,6 +235,28 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
     res.render('error/500')
   }
 
+})
+
+router.get('/delete/:storyId', ensureAuth, async (req, res) => {
+  try {
+    let storyId = req.params.storyId;
+    
+    let user = req.user;
+
+    for(let i=0;i<user.favourites.length;i++)
+    {
+      if(user.favourites == storyId){
+        user.favourites.splice(i,1);
+      }
+    }
+    user.save();
+
+    res.redirect('/stories/showFavourite')
+    
+  } catch (err) {
+    console.error(err)
+    return res.render('error/500')
+  }
 })
 
 
