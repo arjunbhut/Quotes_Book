@@ -58,7 +58,7 @@ router.get('/showFavourite', ensureAuth, async(req,res) =>{
     stories.push(sto);
   
     count++;
-    if(count==size-1 || count==size)
+    if(count==size-1)
     {
       res.render('stories/fav', {
         stories,
@@ -245,10 +245,16 @@ router.get('/delete/:storyId', ensureAuth, async (req, res) => {
 
     for(let i=0;i<user.favourites.length;i++)
     {
-      if(user.favourites == storyId){
+      if(user.favourites[i] == storyId){
         user.favourites.splice(i,1);
       }
     }
+
+    // for(let i=0;i<user.favourites.length;i++)
+    // {
+    //   console.log(user)
+    // }
+
     user.save();
 
     res.redirect('/stories/showFavourite')

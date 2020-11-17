@@ -27,12 +27,27 @@ p {
 }
 
 body {
-  background-image: url("/collage.jpg");
+  background: url("/collage.jpg") rgba(2,0,0,0.7);
   font-family: 'PT Sans', sans-serif;
   background-size: cover;
   background-position: center;
+  background-blend-mode: multiply;
 }
 
-.white{
-  background-color: white;
+.card {
+  height: 400px;
+}
+
+.card-content p {
+  color: #7E7D7D;
+}
+
+.btn.grey {
+  background-color: #5087F6 !important;
+}
+
+.test {
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }

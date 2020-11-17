@@ -33,15 +33,13 @@ module.exports = {
     }
   },
   deleteIcon: function (storyUser, loggedUser, storyId, floating = true) {
-    if (storyUser._id.toString() == loggedUser._id.toString()) {
+    
       if (floating) {
         return `<a href="/stories/delete/${storyId}" class="btn-floating halfway-fab blue"><i class="fas fa-trash fa-small"></i></a>`
       } else {
         return `<a href="/stories/delete/${storyId}"><i class="fas fa-trash"></i></a>`
       }
-    } else {
-      return ''
-    }
+    
   },
   select: function (selected, options) {
     return options
