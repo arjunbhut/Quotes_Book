@@ -51,3 +51,11 @@ body {
   display: flex;
   justify-content: center;
 }
+
+.white-h1 {
+  color: white;
+}
+
+#white-dashboard{
+  padding: 40px;
+}
