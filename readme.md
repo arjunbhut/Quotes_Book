@@ -1,6 +1,6 @@
 # StoryBooks
 
-> Create public and private stories from your life
+> Save public and private Quotes from your favourite tv series
 
 This app uses Node.js/Express/MongoDB with Google OAuth for authentication
 
